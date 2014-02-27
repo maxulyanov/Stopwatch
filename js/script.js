@@ -1,5 +1,6 @@
 $(function(){
 
+
 	//Определение переменных
 	var d_h =  1,
 		d_m =  1,
@@ -24,22 +25,23 @@ $(function(){
 		ms = 0,
 		i = 0,
 		hide = false;
-
+		
+	
 	$('#display').html(def);
 
-	//Старт	
-	$('#start').on('click', function(event){
-		event.preventDefault();
+
+	//Запуск
+	function start(){
 		if(init == true) return false;
 		then = new Date();
 		then.setTime(then.getTime() - time); 
 		init = true;
 		display();
-	});
+	};
+	
 
 	//Стоп
-	$('#stop').on('click', function(event){
-		event.preventDefault();
+	function stop(){
 		if(init == false) return false;
 		init = false;
 		now = new Date();
@@ -51,11 +53,20 @@ $(function(){
 			$('#display').html(def2);
 		}
 		$('#display').html(result)
-	});
+	};
+	
+
+	//Круг
+	function circle(){
+		var box = $('#box-item');
+		var item = $('#display').html();
+		i++
+		$('<div class="circle-item"></div>').html('<span class="i">' + 'Круг ' + i + '</span>' + '<span class="dt">'+ item + '</span>').appendTo(box);
+	};
+	
 
 	//Сброс
-	$('#reset').on('click', function(event){
-		event.preventDefault();
+	function reset(){
 		d_h =  1, d_m =  1, d_sec =  0, s = 0,
 		init = false, time =  0,
 		tm = 1, m = 0, ms = 0, i = 0;
@@ -66,19 +77,12 @@ $(function(){
 			$('#display').html(def2);
 		}
 		$('.circle-item').remove();
-	})
+	};
+	
 
-	//Круг
-	$('#circle').on('click', function(event){
-		event.preventDefault();
-		var box = $('#box-item');
-		var item = $('#display').html();
-		i++
-		$('<div class="circle-item"></div>').html('<span class="i">' + 'Круг ' + i + '</span>' + '<span class="dt">'+ item + '</span>').appendTo(box);
-	})
-
-	$('#show-ms').on('click', function(){
-		if($(this).is(':checked')){
+	//Скрытие/Показ миллисекунд
+	function showMiliSec(){
+		if($('#show-ms').is(':checked')){
 			$('#wrap-check').animate({
 				top:  '50px'
 			}, 550);
@@ -94,6 +98,7 @@ $(function(){
 			$('#box-item').addClass('mini-width').animate({
 				'margin-top' : '60px'
 			}, 550);
+			console.log('check');
 		}
 		else{
 			$('#wrap-check').animate({
@@ -112,8 +117,11 @@ $(function(){
 			$('#box-item').removeClass('mini-width').animate({
 				'margin-top' : '20px'
 			}, 550);
+			console.log('nea');
 		}
-	});
+	};
+
+
 	//Считалка и вывод на экран
 	function display(){
 		if (init == true){
@@ -192,5 +200,43 @@ $(function(){
 			}, 10);
 	    };
 	};
+
+
+	//Запуск функций по клику
+	$('#start').on('click', function(event){
+		event.preventDefault();
+		start();
+	});
+
+	$('#stop').on('click', function(event){
+		event.preventDefault();
+		stop();
+	});
+	
+	$('#reset').on('click', function(event){
+		event.preventDefault();
+		reset();
+	});
+
+	$('#circle').on('click', function(event){
+		event.preventDefault();
+		circle();
+	});
+
+	$('#show-ms').on('click', function(){
+		showMiliSec();
+	});
+
+
+	//Запуск функций с клавиатуры
+	function register(e) {
+		if(!e) e = window.event;
+		var key = e.keyCode;
+		if(key == 13) start();
+		if(key == 32) stop()
+		if(key == 17) circle();
+		if(key == 27) reset();
+    }
+    document.onkeydown = register;
 
 });
