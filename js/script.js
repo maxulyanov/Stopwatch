@@ -84,25 +84,25 @@ $(function(){
 	function showMiliSec(){
 		if($('#show-ms').is(':checked')){
 			$('#wrap-check').animate({
-				top:  '50px'
+				top:  '80px'
 			}, 550);
 			$('.point,.ms').animate({
 				opacity :  'hide'
 			}, 600);
 			$('#wrap-reset').animate({
-				top: '38px', 
+				top: '55px', 
 				right: '215px'
 			}, 600);
 			$('label[for="show-ms"]').text('Снимите, чтобы показать милисекунды -');
 			hide = true;
 			$('#box-item').addClass('mini-width').animate({
-				'margin-top' : '60px'
+				'margin-top' : '85px'
 			}, 550);
 			console.log('check');
 		}
 		else{
 			$('#wrap-check').animate({
-				top:  '10px'
+				top:  '30px'
 			}, 550);
 			$('.point,.ms').animate({
 				opacity :  'show'
@@ -115,7 +115,7 @@ $(function(){
 			hide = false;
 			$('#display').find('span').removeClass('hide');
 			$('#box-item').removeClass('mini-width').animate({
-				'margin-top' : '20px'
+				'margin-top' : '30px'
 			}, 550);
 			console.log('nea');
 		}
